@@ -44,7 +44,7 @@ using std::min;
 namespace tcmalloc {
 
 int Sampler::GetSamplePeriod() {
-  return Static::get_sample_period();
+  return 1048576;
 }
 
 // Run this before using your sampler
@@ -75,7 +75,7 @@ void Sampler::Init(uint64_t seed) {
 // log_2(q) * (-log_e(2) * 1/m) = x
 // In the code, q is actually in the range 1 to 2**26, hence the -26 below
 ssize_t Sampler::PickNextSamplingPoint() {
-  int64_t sample_period = Static::get_sample_period();
+  int64_t sample_period = 1048576;
   if (sample_period <= 0) {
     // In this case, we don't want to sample ever, and the larger a
     // value we put here, the longer until we hit the slow path
@@ -115,7 +115,7 @@ bool Sampler::RecordAllocationSlow(size_t k) {
     }
   }
   bytes_until_sample_ = PickNextSamplingPoint();
-  return Static::get_sample_period() <= 0;
+  return 1048576 <= 0;
 }
 
 }  // namespace tcmalloc
