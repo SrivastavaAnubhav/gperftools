@@ -86,15 +86,6 @@ class Static {
   // State kept for sampled allocations (/pprof/heap support)
   static Span* sampled_objects() { return &sampled_objects_; }
 
-  static int64_t get_sample_period() {
-    return 1048576;
-    // return sample_period_.load(std::memory_order_relaxed);
-  }
-  static void set_sample_period(int64_t rate) {
-    // This is not on any performance-intensive paths, so sequential consistency is fine.
-    sample_period_.store(rate, std::memory_order_seq_cst);
-  }
-
   // Check if InitStaticVars() has been run.
   static bool IsInited() { return inited_; }
 
@@ -130,8 +121,6 @@ class Static {
     uintptr_t extra;  // To force alignment
   };
   ATTRIBUTE_HIDDEN static PageHeapStorage pageheap_;
-
-  static std::atomic<int64_t> sample_period_;
 };
 
 }  // namespace tcmalloc
