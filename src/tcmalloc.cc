@@ -650,7 +650,7 @@ class TCMallocImplementation : public MallocExtension {
 
   // We may print an extra, tcmalloc-specific warning message here.
   virtual void GetHeapSample(MallocExtensionWriter* writer) {
-    if (1048576 == 0) {
+    if (0 == 0) {
       const char* const kWarningMsg =
           "%warn\n"
           "%warn This heap profile does not have any data in it, because\n"
